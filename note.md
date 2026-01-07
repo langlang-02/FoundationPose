@@ -84,6 +84,17 @@ LINEMOD
     Linemod_preprocessed
 ```
 
+参考
+- https://blog.csdn.net/qq_41204464/article/details/138619210
+  - 提供run_linemod.py 可视化代码
+  - 比较全的复现
+- [Foundationpose 数据集制作以及在WSL2上面成功运行自己的数据集](https://www.cnblogs.com/day1024/p/18948051)
+- [Foundation_pose在自己的物体上复现指南](https://blog.csdn.net/qq_53186375/article/details/146321017)
+- https://zhuanlan.zhihu.com/p/13037677977
+  - 论文讲解，不清晰的复现
+
+
+
 ## Commands
 ### demo
 命令行指定mesh_file和test_scene_dir（或者直接在代码中修改默认路径）切换识别不同物体（手钻和芥末瓶）
@@ -104,6 +115,10 @@ python bundlesdf/run_nerf.py --ref_view_dir /home/tiger/Disk/Downloads/Dataset/L
 
 python run_linemod.py --linemod_dir /home/tiger/Disk/Downloads/Dataset/LINEMOD --use_reconstructed_mesh 1 --ref_view_dir /home/tiger/Disk/Downloads/Dataset/LINEMOD/ref_views
 #正常运行，没有可视化
+
+python run_linemod_vis.py
+#参考 https://blog.csdn.net/qq_41204464/article/details/138619210?login=from_csdn 
+#添加可视化，可视化文件存在/home/tiger/Disk/Downloads/Dataset/LINEMOD/lm_test_all/test/000015/track_vis/
 ```
 
 
@@ -112,3 +127,12 @@ python run_linemod.py --linemod_dir /home/tiger/Disk/Downloads/Dataset/LINEMOD -
 python run_ycb_video.py --ycbv_dir /mnt/9a72c439-d0a7-45e8-8d20-d7a235d02763/DATASET/YCB_Video --use_reconstructed_mesh 0
 #还没下载ycb数据集
 ```
+
+### Custom Models
+
+可用方法：
+1. BundleSDF 生成模型
+
+2. Stable Fast 3D
+https://github.com/Stability-AI/stable-fast-3d
+https://huggingface.co/spaces/stabilityai/stable-fast-3d
