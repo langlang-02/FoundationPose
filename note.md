@@ -132,6 +132,7 @@ python run_ycb_video.py --ycbv_dir /mnt/9a72c439-d0a7-45e8-8d20-d7a235d02763/DAT
 
 可用方法：
 1. BundleSDF 生成模型
+https://github.com/NVlabs/BundleSDF
 
 2. Stable Fast 3D
 https://github.com/Stability-AI/stable-fast-3d
