@@ -22,7 +22,7 @@ cuda版本不匹配
 查看电脑cuda版本为12.5，装cu121适配的torch
 
 找不到eigen
-修改FoundationPose/bundlesdf/mycuda/setup.中的include_dirs=，添加
+修改FoundationPose/bundlesdf/mycuda/setup.py中的include_dirs=，添加
 "/home/tiger/ProgramFiles/miniconda3/envs/foundationpose/include/eigen3"注意不能把用户主目录省略为~
 
 
@@ -130,6 +130,16 @@ python run_ycb_video.py --ycbv_dir /mnt/9a72c439-d0a7-45e8-8d20-d7a235d02763/DAT
 
 ### Custom Models
 
+参考讨论
+https://github.com/NVlabs/FoundationPose/issues/32
+
+如果效果不好，参考这个比较详细的debug指引 https://github.com/NVlabs/FoundationPose/issues/44
+
+
+https://github.com/NVlabs/FoundationPose/issues/25#issuecomment-2037719050
+
+
+
 可用方法：
 1. BundleSDF 生成模型
 https://github.com/NVlabs/BundleSDF
@@ -137,3 +147,48 @@ https://github.com/NVlabs/BundleSDF
 2. Stable Fast 3D
 https://github.com/Stability-AI/stable-fast-3d
 https://huggingface.co/spaces/stabilityai/stable-fast-3d
+
+
+
+```bash
+python run_demo.py --mesh_file ./demo_data/extracted_data/mesh/bottle.obj --test_scene_dir ./demo_data/extracted_data
+
+python run_demo.py --mesh_file ./demo_data/brick/mesh/untitled.obj --test_scene_dir ./demo_data/brick
+```
+
+
+```bash
+run_demo.py 43 <module>
+est = FoundationPose(model_pts=mesh.vertices, model_normals=mesh.vertex_normals, mesh=mesh, scorer=scorer, refiner=refiner, debug_dir=debug_dir, debug=debug, glctx=glctx)
+
+estimater.py 26 __init__
+self.reset_object(model_pts, model_normals, symmetry_tfs=symmetry_tfs, mesh=mesh)
+
+estimater.py 71 reset_object
+self.mesh_tensors = make_mesh_tensors(self.mesh)
+
+Utils.py 107 make_mesh_tensors
+img = np.array(mesh.visual.material.image.convert('RGB'))
+
+AttributeError:
+'NoneType' object has no attribute 'convert'
+```
+
+报错，修改mtl文件中的map_Kd值，改为同文件夹之下的纹理图片位置
+
+别人的数据集
+https://github.com/HuailiangMa/Dataset_foundation_pose/tree/main
+能跑通
+
+
+将obj文件和ply导入blender查看，发现obj远小于点云对应位置尺寸
+修改了bag导出深度图像的逻辑，深度图像应该大部分都是深色的
+
+
+### Other Articles
+
+https://www.jeremiahcoholich.com/post/foundationpose/
+
+
+FoundationPose 运行指南
+https://github.com/030422Lee/FoundationPose_manual
